@@ -1,4 +1,3 @@
-// ✅ pages/ClienteMisSolicitudes.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -10,7 +9,7 @@ const ClienteMisSolicitudes = () => {
 
   useEffect(() => {
     if (usuario?.idUsuario) obtenerSolicitudes();
-    else setMensaje("❌ No se encontró el usuario. Inicia sesión nuevamente.");
+    else setMensaje("No se encontró el usuario. Inicia sesión nuevamente.");
   }, []);
 
   const obtenerSolicitudes = async () => {
@@ -22,7 +21,7 @@ const ClienteMisSolicitudes = () => {
       setSolicitudes(res.data);
       setMensaje("");
     } catch (error) {
-      console.error("❌ Error al obtener solicitudes:", error);
+      console.error("Error al obtener solicitudes:", error);
       setMensaje("No hay solicitudes disponibles o cerradas.");
       setSolicitudes([]);
     } finally {
@@ -40,7 +39,7 @@ const ClienteMisSolicitudes = () => {
       alert(res.data.message || "Solicitud cancelada correctamente.");
       obtenerSolicitudes();
     } catch (error) {
-      console.error("❌ Error al cancelar solicitud:", error);
+      console.error("Error al cancelar solicitud:", error);
       alert("Error al cancelar la solicitud.");
     } finally {
       setCargando(false);
@@ -63,7 +62,7 @@ const ClienteMisSolicitudes = () => {
       link.click();
       URL.revokeObjectURL(link.href);
     } catch (error) {
-      console.error("❌ Error al descargar contrato:", error);
+      console.error("Error al descargar contrato:", error);
     }
   };
 

@@ -38,7 +38,7 @@ function ClienteCrearSolicitud() {
   const [destino, setDestino] = useState(null);
   const [permisoUbicacion, setPermisoUbicacion] = useState(false);
 
-  // 🗺️ Obtener ciudad por coordenadas
+  // Obtener ciudad por coordenadas
   const obtenerCiudad = async (lat, lng) => {
     try {
       const res = await fetch(
@@ -57,7 +57,7 @@ function ClienteCrearSolicitud() {
     }
   };
 
-  // 📍 Obtener ubicación actual
+  // Obtener ubicación actual
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       async (pos) => {
@@ -72,11 +72,11 @@ function ClienteCrearSolicitud() {
         }));
         setPermisoUbicacion(true);
       },
-      () => setMensaje("❌ No se pudo obtener tu ubicación actual")
+      () => setMensaje("No se pudo obtener tu ubicación actual")
     );
   }, []);
 
-  // 📏 Calcular distancia (Haversine)
+  // Calcular distancia (Haversine)
   const calcularDistancia = (origen, destino) => {
     const R = 6371;
     const dLat = ((destino[0] - origen[0]) * Math.PI) / 180;
@@ -99,7 +99,7 @@ function ClienteCrearSolicitud() {
   };
 
 
-  // 📍 Mapa para seleccionar destino
+  // Mapa para seleccionar destino
   function MapaDestino() {
     useMapEvents({
       async click(e) {
@@ -122,16 +122,15 @@ function ClienteCrearSolicitud() {
     return destino ? <Marker position={destino} /> : null;
   }
 
-  // 🚀 Envío del formulario
-  // 🚀 Envío del formulario
+  // Envío del formulario
 const handleSubmit = async (e) => {
     e.preventDefault();
     if (!usuario || !usuario.idUsuario) {
-      setMensaje("❌ No se encontró el usuario. Inicia sesión nuevamente.");
+      setMensaje("No se encontró el usuario. Inicia sesión nuevamente.");
       return;
     }
 
-    // Verificamos que haya coordenadas y ciudades
+    // Verificar que haya coordenadas y ciudades
     if (
       !formData.origen_lat ||
       !formData.origen_lng ||
@@ -140,7 +139,7 @@ const handleSubmit = async (e) => {
       !formData.origen ||
       !formData.destino
     ) {
-      setMensaje("⚠️ Selecciona un destino en el mapa antes de enviar.");
+      setMensaje("Selecciona un destino en el mapa antes de enviar.");
       return;
     }
 
@@ -152,7 +151,7 @@ const handleSubmit = async (e) => {
       formData.precio_usuario > rangoSuperior
     ) {
       setMensaje(
-        "⚠️ El precio ingresado está fuera del rango permitido (±10% del estimado)"
+        "El precio ingresado está fuera del rango permitido (±10% del estimado)"
       );
       return;
     }
@@ -179,7 +178,7 @@ const handleSubmit = async (e) => {
 
       const data = await res.json();
       if (res.ok) {
-        setMensaje("✅ Solicitud creada correctamente");
+        setMensaje("Solicitud creada correctamente");
         setFormData({
           descripcion: "",
           peso: "",
@@ -195,16 +194,16 @@ const handleSubmit = async (e) => {
         });
         setDestino(null);
       } else {
-        setMensaje(`❌ ${data.message}`);
+        setMensaje(`${data.message}`);
       }
     } catch (error) {
       console.error(error);
-      setMensaje("❌ Error al conectar con el servidor");
+      setMensaje("Error al conectar con el servidor");
     }
   };
 
 
-  if (!permisoUbicacion) return <p>📍 Solicitando permiso de ubicación...</p>;
+  if (!permisoUbicacion) return <p> Solicitando permiso de ubicación...</p>;
 
   return (
     <div style={styles.container}>
@@ -261,7 +260,7 @@ const handleSubmit = async (e) => {
               📏 {formData.origen} → {formData.destino} (
               {formData.distancia_km} km)
             </p>
-            <p>💰 Precio sugerido: ${formData.precio_estimado}</p>
+            <p>Precio sugerido: ${formData.precio_estimado}</p>
             <label>Precio propuesto:</label>
             <input
               type="number"

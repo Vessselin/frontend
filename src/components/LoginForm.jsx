@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom"; // 👈 para redirección
+import { useNavigate } from "react-router-dom"; 
 
 function LoginForm({ setUser }) {
   const [correo, setCorreo] = useState("");
@@ -64,14 +64,14 @@ function LoginForm({ setUser }) {
         localStorage.setItem("usuario", JSON.stringify(usuarioNormalizado));
         setUser(usuarioNormalizado);
 
-        setMessage(`✅ Bienvenido, ${data.nombre}`);
+        setMessage(`Bienvenido, ${data.nombre}`);
         redirigir(usuarioNormalizado);
       } else {
-        setMessage(`❌ ${data.message}`);
+        setMessage(`${data.message}`);
       }
     } catch (err) {
       console.error(err);
-      setMessage("❌ Error de conexión con el servidor");
+      setMessage("Error de conexión con el servidor");
     }
   };
 
@@ -102,7 +102,6 @@ function LoginForm({ setUser }) {
 
       <p>{message}</p>
 
-      {/* 👇 Enlace al registro */}
       <p>
         ¿No tienes cuenta?{" "}
         <button

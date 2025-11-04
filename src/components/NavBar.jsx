@@ -12,7 +12,6 @@ const Navbar = ({ usuario, onLogout }) => {
 
   if (!usuario) return null;
 
-  // Asegurarse de leer el rol correcto
   const rol = parseInt(usuario.idTipoUsuario);
 
   return (

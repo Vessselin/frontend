@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom"; // 👈 agregado
+import { useNavigate } from "react-router-dom";
 
 const RegisterForm = () => {
-  const navigate = useNavigate(); // 👈 para redirigir después de registrar
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     nombre: "",
     correo: "",
@@ -47,7 +47,6 @@ const RegisterForm = () => {
         capacidad: "",
       });
 
-      // 👇 Redirigir al login
       navigate("/login");
     } catch (error) {
       console.error(error);
@@ -151,7 +150,6 @@ const RegisterForm = () => {
         <button type="submit">Registrarse</button>
       </form>
 
-      {/* 👇 Enlace para volver al login */}
       <p style={{ textAlign: "center", marginTop: "10px" }}>
         ¿Ya tienes una cuenta?{" "}
         <button

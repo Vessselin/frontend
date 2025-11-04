@@ -32,7 +32,7 @@ const ClienteMisViajes = () => {
         }));
         setNegociaciones(mapped);
       } catch (error) {
-        console.error("❌ Error al cargar negociaciones:", error);
+        console.error("Error al cargar negociaciones:", error);
       } finally {
         setLoading(false);
       }
@@ -49,14 +49,14 @@ const ClienteMisViajes = () => {
 
       if (!res.data.success) {
         if (res.data.message.includes("tomada")) {
-          alert("⚠️ Esta carga ya fue tomada por otro transportista.");
+          alert("Esta carga ya fue tomada por otro transportista.");
         } else {
-          alert("❌ No se pudo pactar la negociación.");
+          alert("No se pudo pactar la negociación.");
         }
         return window.location.reload();
       }
 
-      // 2️⃣ Crear contrato automáticamente
+      // Crear contrato automáticamente
       const contratoRes = await axios.post(
         "http://localhost:4000/api/blockchain/contrato",
         { idNegociacion }
@@ -73,7 +73,7 @@ const ClienteMisViajes = () => {
       window.location.reload();
     } catch (error) {
       console.error("Error al aceptar:", error);
-      alert("❌ Ocurrió un error al aceptar la negociación.");
+      alert("Ocurrió un error al aceptar la negociación.");
     }
   };
 
@@ -93,12 +93,12 @@ const ClienteMisViajes = () => {
         "http://localhost:4000/api/negociaciones-cliente/contraoferta",
         { idNegociacion: neg.idNegociacion, nuevoMonto: valor }
       );
-      alert("📩 Contraoferta enviada correctamente.");
+      alert("Contraoferta enviada correctamente.");
       // sólo recargo para reflejar nuevo estado; en producción podría actualizarse sin reload
       window.location.reload();
     } catch (error) {
       console.error("Error en contraoferta:", error);
-      alert("❌ Error al enviar la contraoferta.");
+      alert("Error al enviar la contraoferta.");
     }
   };
 
@@ -107,7 +107,7 @@ const ClienteMisViajes = () => {
       await axios.put(
         `http://localhost:4000/api/negociaciones-cliente/cancelar/${idNegociacion}`
       );
-      alert("🚫 Negociación cancelada");
+      alert("Negociación cancelada");
       window.location.reload();
     } catch (error) {
       console.error("Error al cancelar:", error);
@@ -158,8 +158,8 @@ const ClienteMisViajes = () => {
                 <p style={{ color: "gray" }}>⏳ Esperando respuesta del transportista...</p>
               )}
 
-              {neg.estado === "Cancelado" && <p style={{ color: "red" }}>❌ Esta oferta ha sido cancelada</p>}
-              {neg.estado === "Pactado" && <p style={{ color: "green" }}>✅ Negociación pactada</p>}
+              {neg.estado === "Cancelado" && <p style={{ color: "red" }}>Esta oferta ha sido cancelada</p>}
+              {neg.estado === "Pactado" && <p style={{ color: "green" }}>Negociación pactada</p>}
             </div>
           ))
       )}

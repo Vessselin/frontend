@@ -1,4 +1,3 @@
-// TransportistaOfertas.jsx
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -19,14 +18,12 @@ const TransportistaOfertas = () => {
       const res = await axios.get("http://localhost:4000/api/ofertas/solicitudes-disponibles");
       setSolicitudes(res.data);
     } catch (err) {
-      console.error("❌ Error al obtener solicitudes:", err);
+      console.error("Error al obtener solicitudes:", err);
       setError("No se pudieron cargar las solicitudes disponibles.");
     }
   };
 
-  /**
-   * 🔹 Aceptar una solicitud directamente
-   */
+  // aceptar solicitud y crear negociación si no existe
   const aceptarSolicitud = async (idNegociacionParam, idSolicitud_Carga, s) => {
     if (!window.confirm("¿Deseas aceptar esta carga y cerrar la negociación?")) return;
     setCargando(true);
@@ -54,7 +51,7 @@ const TransportistaOfertas = () => {
           const crear = await axios.post("http://localhost:4000/api/negociaciones/crear", {
             idSolicitud_Carga,
             idTransportista,
-            monto: s.precio_final, // 💰 usar el precio final actual de la tabla precio_carga
+            monto: s.precio_final, // usar el precio final actual de la tabla precio_carga
             comentarios: "Aceptación directa (basada en precio actual del cliente)",
           });
           idNegociacion = crear.data.idNegociacion || crear.data.insertId;
@@ -68,7 +65,7 @@ const TransportistaOfertas = () => {
       );
 
       if (!pactar.data.success) {
-        alert("❌ No se pudo pactar la negociación.");
+        alert("No se pudo pactar la negociación.");
         return;
       }
 
@@ -78,35 +75,33 @@ const TransportistaOfertas = () => {
       });
 
       if (contrato.data.success) {
-        alert(`✅ Contrato creado correctamente.\nTxHash: ${contrato.data.txHash}`);
+        alert(`Contrato creado correctamente.\nTxHash: ${contrato.data.txHash}`);
       } else {
-        alert("⚠️ Negociación pactada, pero no se pudo crear el contrato blockchain.");
+        alert("Negociación pactada, pero no se pudo crear el contrato blockchain.");
       }
 
       await obtenerSolicitudes();
     } catch (err) {
-      console.error("❌ Error al aceptar solicitud:", err);
-      alert("❌ Error al aceptar la solicitud.");
+      console.error("Error al aceptar solicitud:", err);
+      alert("Error al aceptar la solicitud.");
     } finally {
       setCargando(false);
     }
   };
 
-  /**
-   * 🔹 Enviar contraoferta (valida rango precio_min/precio_max)
-   */
+  // hacer contraoferta
   const hacerContraoferta = async (idSolicitud_Carga, precio_min, precio_max) => {
     const montoStr = prompt(
       `Ingrese el valor de su contraoferta (entre $${precio_min?.toLocaleString()} y $${precio_max?.toLocaleString()}):`
     );
 
     if (!montoStr || isNaN(montoStr)) {
-      return alert("❌ Debe ingresar un monto válido.");
+      return alert("Debe ingresar un monto válido.");
     }
 
     const monto = Number(montoStr);
-    if (monto < precio_min) return alert(`⚠️ El monto no puede ser menor a $${precio_min}.`);
-    if (monto > precio_max) return alert(`⚠️ El monto no puede ser mayor a $${precio_max}.`);
+    if (monto < precio_min) return alert(`El monto no puede ser menor a $${precio_min}.`);
+    if (monto > precio_max) return alert(`El monto no puede ser mayor a $${precio_max}.`);
 
     setCargando(true);
     try {
@@ -118,22 +113,22 @@ const TransportistaOfertas = () => {
       });
 
       if (resp.data.success) {
-        alert("✅ Contraoferta enviada correctamente.");
+        alert("Contraoferta enviada correctamente.");
       } else {
-        alert("⚠️ No se pudo enviar la contraoferta.");
+        alert("No se pudo enviar la contraoferta.");
       }
 
       await obtenerSolicitudes();
     } catch (err) {
-      console.error("❌ Error al crear contraoferta:", err);
-      alert("❌ Error al crear la contraoferta.");
+      console.error("Error al crear contraoferta:", err);
+      alert("Error al crear la contraoferta.");
     } finally {
       setCargando(false);
     }
   };
 
-  // ------------------------------------------------------------
 
+  // Renderizado del componente
   return (
     <div className="min-h-screen bg-gray-50 py-10 px-6">
       <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
@@ -179,11 +174,11 @@ const TransportistaOfertas = () => {
 
               <div className="bg-gray-100 rounded-lg p-3 mt-3">
                 <p className="text-sm text-gray-600 mb-1">
-                  💰 <strong>Precio ofertado:</strong>{" "}
+                  <strong>Precio ofertado:</strong>{" "}
                   ${s.precio_final?.toLocaleString() || "N/A"}
                 </p>
                 <p className="text-sm text-gray-600">
-                  🔄 <strong>Rango permitido:</strong>{" "}
+                  <strong>Rango permitido:</strong>{" "}
                   ${s.precio_min?.toLocaleString()} - ${s.precio_max?.toLocaleString()}
                 </p>
                 <p className="text-sm mt-2">

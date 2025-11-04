@@ -31,7 +31,7 @@ const TransportistaMisViajes = () => {
         }));
         setNegociaciones(mapped);
       } catch (error) {
-        console.error("❌ Error al cargar negociaciones:", error);
+        console.error("Error al cargar negociaciones:", error);
       } finally {
         setLoading(false);
       }
@@ -48,14 +48,14 @@ const TransportistaMisViajes = () => {
 
       if (!res.data.success) {
         if (res.data.message.includes("tomada")) {
-          alert("⚠️ Esta carga ya fue tomada por otro transportista.");
+          alert("Esta carga ya fue tomada por otro transportista.");
         } else {
-          alert("❌ No se pudo pactar la negociación.");
+          alert("No se pudo pactar la negociación.");
         }
         return window.location.reload();
       }
 
-      // 2️⃣ Crear contrato automáticamente
+      // Crear contrato automáticamente
       const contratoRes = await axios.post(
         "http://localhost:4000/api/blockchain/contrato",
         { idNegociacion }
@@ -63,16 +63,16 @@ const TransportistaMisViajes = () => {
 
       if (contratoRes.data.success) {
         alert(
-          `✅ Contrato generado correctamente.\nTxHash: ${contratoRes.data.txHash}`
+          `Contrato generado correctamente.\nTxHash: ${contratoRes.data.txHash}`
         );
       } else {
-        alert("⚠️ Negociación aceptada, pero ocurrió un error al crear el contrato.");
+        alert("Negociación aceptada, pero ocurrió un error al crear el contrato.");
       }
 
       window.location.reload();
     } catch (error) {
       console.error("Error al aceptar:", error);
-      alert("❌ Ocurrió un error al aceptar la negociación.");
+      alert("Ocurrió un error al aceptar la negociación.");
     }
   };
 
@@ -92,11 +92,11 @@ const TransportistaMisViajes = () => {
         "http://localhost:4000/api/negociaciones-transportista/contraoferta",
         { idNegociacion: neg.idNegociacion, nuevoMonto: valor }
       );
-      alert("📩 Contraoferta enviada correctamente.");
+      alert("Contraoferta enviada correctamente.");
       window.location.reload();
     } catch (error) {
       console.error("Error en contraoferta:", error);
-      alert("❌ Error al enviar la contraoferta.");
+      alert("Error al enviar la contraoferta.");
     }
   };
 
@@ -105,7 +105,7 @@ const TransportistaMisViajes = () => {
       await axios.put(
         `http://localhost:4000/api/negociaciones-transportista/cancelar/${idNegociacion}`
       );
-      alert("🚫 Negociación cancelada");
+      alert("Negociación cancelada");
       window.location.reload();
     } catch (error) {
       console.error("Error al cancelar:", error);
@@ -156,8 +156,8 @@ const TransportistaMisViajes = () => {
                 <p style={{ color: "gray" }}>⏳ Esperando respuesta del cliente...</p>
               )}
 
-              {neg.estado === "Cancelado" && <p style={{ color: "red" }}>❌ Esta oferta ha sido cancelada</p>}
-              {neg.estado === "Pactado" && <p style={{ color: "green" }}>✅ Negociación pactada</p>}
+              {neg.estado === "Cancelado" && <p style={{ color: "red" }}>Esta oferta ha sido cancelada</p>}
+              {neg.estado === "Pactado" && <p style={{ color: "green" }}>Negociación pactada</p>}
             </div>
           ))
       )}

@@ -54,7 +54,7 @@ function App() {
         nombre: nombre ?? "Usuario",
       };
       setUsuario(normalized);
-      console.log("🔁 Sesión restaurada:", normalized);
+      console.log("Sesión restaurada:", normalized);
     } catch (e) {
       console.warn("Error al parsear usuario en localStorage", e);
     }
