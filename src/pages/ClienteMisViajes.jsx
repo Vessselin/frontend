@@ -118,7 +118,7 @@ const ClienteMisViajes = () => {
 
   return (
     <div className="contenedor">
-      <h2>🧾 Mis Negociaciones (Cliente)</h2>
+      <h2>🧾 Mis Negociaciones</h2>
       {negociaciones.length === 0 ? (
         <p>No tienes negociaciones activas.</p>
       ) : (

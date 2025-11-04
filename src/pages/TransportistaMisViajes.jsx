@@ -116,7 +116,7 @@ const TransportistaMisViajes = () => {
 
   return (
     <div className="contenedor">
-      <h2>🚚 Mis Negociaciones (Transportista)</h2>
+      <h2>🚚 Mis Negociaciones</h2>
       {negociaciones.length === 0 ? (
         <p>No tienes negociaciones activas.</p>
       ) : (
@@ -128,7 +128,7 @@ const TransportistaMisViajes = () => {
               <p><b>Origen:</b> {neg.origen} → <b>Destino:</b> {neg.destino}</p>
               <p><b>Peso:</b> {neg.peso} kg | <b>Distancia:</b> {neg.distancia_km} km</p>
               <p><b>Monto actual:</b> ${neg.monto ?? "N/A"}</p>
-              <p><b>Rango permitido (fijo):</b> ${neg.originalMin} - ${neg.originalMax}</p>
+              <p><b>Rango permitido:</b> ${neg.originalMin} - ${neg.originalMax}</p>
               <p><b>Estado:</b> {neg.estado}</p>
 
               {neg.estado === "Oferta_Cliente" && (

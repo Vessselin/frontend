@@ -90,7 +90,7 @@ const TransportistaMisCargas = () => {
                       onClick={() => descargarContrato(c.hashBlockchain)}
                       className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg text-sm"
                     >
-                      🖨️ Descargar
+                      🖨️
                     </button>
                   </td>
                 </tr>
